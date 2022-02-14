@@ -1,35 +1,39 @@
 class Game < ApplicationRecord
   before_validation(on: :create) do  
     self.state = {
-      0 => { 0 => { "letter": 'a', "cl": false, "ci": false}, 1 => { "letter": 'a', "cl": false, "ci": false}, 2 => { "letter": 'a', "cl": false, "ci": false}, 3 => { "letter": 'a', "cl": false, "ci": false}, 4 => { "letter": 'a', "cl": false, "ci": false}, },
-      1 => { 0 => { "letter": '', "cl": false, "ci": false}, 1 => { "letter": '', "cl": false, "ci": false}, 2 => { "letter": '', "cl": false, "ci": false}, 3 => { "letter": '', "cl": false, "ci": false}, 4 => { "letter": '', "cl": false, "ci": false}, },
-      2 => { 0 => { "letter": '', "cl": false, "ci": false}, 1 => { "letter": '', "cl": false, "ci": false}, 2 => { "letter": '', "cl": false, "ci": false}, 3 => { "letter": '', "cl": false, "ci": false}, 4 => { "letter": '', "cl": false, "ci": false}, },
-      3 => { 0 => { "letter": '', "cl": false, "ci": false}, 1 => { "letter": '', "cl": false, "ci": false}, 2 => { "letter": '', "cl": false, "ci": false}, 3 => { "letter": '', "cl": false, "ci": false}, 4 => { "letter": '', "cl": false, "ci": false}, },
-      4 => { 0 => { "letter": '', "cl": false, "ci": false}, 1 => { "letter": '', "cl": false, "ci": false}, 2 => { "letter": '', "cl": false, "ci": false}, 3 => { "letter": '', "cl": false, "ci": false}, 4 => { "letter": '', "cl": false, "ci": false}, },
-      5 => { 0 => { "letter": '', "cl": false, "ci": false}, 1 => { "letter": '', "cl": false, "ci": false}, 2 => { "letter": '', "cl": false, "ci": false}, 3 => { "letter": '', "cl": false, "ci": false}, 4 => { "letter": '', "cl": false, "ci": false}, }
+      0 => { 0 => { "letter": 'a', "active": "played", "ci": false}, 1 => { "letter": 'a', "active": "played", "ci": false}, 2 => { "letter": 'a', "active": "played", "ci": false}, 3 => { "letter": 'a', "active": "played", "ci": false}, 4 => { "letter": 'a', "active": "played", "ci": false}, },
+      1 => { 0 => { "letter": '', "active": "active", "ci": false}, 1 => { "letter": '', "active": "active", "ci": false}, 2 => { "letter": '', "active": "active", "ci": false}, 3 => { "letter": '', "active": "active", "ci": false}, 4 => { "letter": '', "active": "active", "ci": false}, },
+      2 => { 0 => { "letter": '', "active": "inactive", "ci": false}, 1 => { "letter": '', "active": "inactive", "ci": false}, 2 => { "letter": '', "active": "inactive", "ci": false}, 3 => { "letter": '', "active": "inactive", "ci": false}, 4 => { "letter": '', "active": "inactive", "ci": false}, },
+      3 => { 0 => { "letter": '', "active": "inactive", "ci": false}, 1 => { "letter": '', "active": "inactive", "ci": false}, 2 => { "letter": '', "active": "inactive", "ci": false}, 3 => { "letter": '', "active": "inactive", "ci": false}, 4 => { "letter": '', "active": "inactive", "ci": false}, },
+      4 => { 0 => { "letter": '', "active": "inactive", "ci": false}, 1 => { "letter": '', "active": "inactive", "ci": false}, 2 => { "letter": '', "active": "inactive", "ci": false}, 3 => { "letter": '', "active": "inactive", "ci": false}, 4 => { "letter": '', "active": "inactive", "ci": false}, },
+      5 => { 0 => { "letter": '', "active": "inactive", "ci": false}, 1 => { "letter": '', "active": "inactive", "ci": false}, 2 => { "letter": '', "active": "inactive", "ci": false}, 3 => { "letter": '', "active": "inactive", "ci": false}, 4 => { "letter": '', "active": "inactive", "ci": false}, }
     }
 
     self.keyword = "since"
   end
 
-  def evaluate(guess)
-    mycheck = check(guess)
-    puts "Mycheck #{mycheck}"
+  def evaluate(row, col, letter)
 
-    if mycheck
-      puts "good job!"
-    else
-      puts "You lose!"
+    self.state[row][col]['letter'] = letter
+    self.state[row][col]['active'] = 'played'
+    if !self.state[(Integer(row)+1).to_s].nil? 
+      self.state[(Integer(row)+1).to_s][col]['active'] = 'active'
+    end
+
+    pp self.state
+    
+    self.save!
+    # mycheck = check(guess)
+    # puts "Mycheck #{mycheck}"
+
+    # if mycheck
+      # puts "good job!"
+    # else
+      # puts "You lose!"
       # letters = intersection(guess)
       # indices = correct_indices(guess)
       # update_state(guess, letters, indices)
-    end
-  end
-
-  def [](row, col)
-    result = state[row.to_s][col.to_s]
-    puts "Result #{result.nil?}"
-    result
+    # end
   end
 
   def check(guess)

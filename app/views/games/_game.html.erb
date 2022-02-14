@@ -1,17 +1,20 @@
-<%= form_with url: "/search", method: :get, autocomplete: "off" do |form| %>
-  <% 6.times do |row| %>
+<%= form_with model: @game, method: :patch, autocomplete: "off" do |form| %>
+  <% @game.state.each do |row_key, row_val| %>
     <div class="row">
-    <% 5.times do |col| %>
-        <% if !game[row, col].nil? && game[row, col]['letter'] != '' %>
-          <span class="col col-active">
-            <%= game[row, col]['letter'] %>
-          </span>
-        <% else %>
-          <span class="col">
-            <%= form.text_field :attribute, :maxlength => 1 %>
-          </span>
-        <% end %>
+    <% row_val.each do |col_key, col_val| %>
+      <% if col_val['letter'] != '' %>
+        <span class="col col-active"><%= "#{col_val['letter']}" %></span>
+      <% elsif col_val['active'] == 'active' %>
+        <span class="col">
+          <%= form.text_field name="#{row_key}-#{col_key}", :maxlength => 1 %>
+        </span>
+      <% else %>
+        <span class="col">
+          <%= form.text_field :attribute, :maxlength => 1, disabled: true %>
+        </span>
+      <% end %>
     <% end %>
     </div>
   <% end %>
+  <%= form.submit "Submit", disable_with: 'Submiting...' %>
 <% end %>

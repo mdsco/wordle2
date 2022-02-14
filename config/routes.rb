@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
-  # get 'games/index'
-  # get 'games/show'
 
   resources :games
+  # post '/update/:id', to: 'games#update'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
