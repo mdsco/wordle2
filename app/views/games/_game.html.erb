@@ -3,7 +3,7 @@
     <div class="row">
     <% row_val.each do |col_key, col_val| %>
       <% if col_val['letter'] != '' %>
-        <span class="col col-active"><%= "#{col_val['letter']}" %></span>
+        <span class="col col-active col-<%= col_val['color'] %>"><%= "#{col_val['letter']}" %></span>
       <% elsif col_val['active'] == 'active' %>
         <span class="col">
           <%= form.text_field name="#{row_key}-#{col_key}", :maxlength => 1 %>

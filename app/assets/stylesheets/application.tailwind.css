@@ -39,6 +39,24 @@ body {
   border: #000000 2px solid;
 }
 
+.wordle-container .col-green {
+  border: #6aaa64;
+  background-color: #6aaa64;
+  color: white;
+}
+
+.wordle-container .col-yellow {
+  border: #c9b458;
+  background-color: #c9b458;
+  color: white;
+}
+
+.wordle-container .col-gray {
+  border: #787c7e;
+  background-color: #787c7e;
+  color: white;
+}
+
 .wordle-container .col input {
   width: 100%;
   height: 100%;

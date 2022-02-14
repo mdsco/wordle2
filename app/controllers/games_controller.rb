@@ -16,13 +16,15 @@ class GamesController < ApplicationController
 
   def update
     @game = Game.find(params[:id])
-
+    r = ''
     params[:game].each do |key, value|
       row, col = key.split('-')
-      @game.evaluate(row, col, value)
+      r = row
+      @game.update(row, col, value)
     end
 
+    @game.evaluate(r)
+
     render show
-    
   end
 end
