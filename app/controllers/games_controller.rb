@@ -3,9 +3,6 @@ class GamesController < ApplicationController
     @games = Game.all
   end
 
-  def create
-  end
-
   def show
     @game = Game.find(params[:id])
   end
@@ -17,13 +14,14 @@ class GamesController < ApplicationController
   def update
     @game = Game.find(params[:id])
     r = ''
-    params[:game].each do |key, value|
-      row, col = key.split('-')
-      r = row
-      @game.update(row, col, value)
+    if !params[:game].nil?
+      params[:game].each do |key, value|
+        row, col = key.split('-')
+        r = row
+        @game.update(row, col, value)
+      end
+      @game.evaluate(r)
     end
-
-    @game.evaluate(r)
 
     render show
   end

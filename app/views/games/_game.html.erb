@@ -1,5 +1,5 @@
-<%= form_with model: @game, method: :patch, autocomplete: "off" do |form| %>
-  <% @game.state.each do |row_key, row_val| %>
+<%= form_with model: game, method: :patch, autocomplete: "off" do |form| %>
+  <% game.state.each do |row_key, row_val| %>
     <div class="row">
     <% row_val.each do |col_key, col_val| %>
       <% if col_val['letter'] != '' %>

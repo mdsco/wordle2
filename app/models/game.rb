@@ -10,7 +10,11 @@ class Game < ApplicationRecord
     }
 
     self.keyword = "since"
+
+    self.winstate = ''
   end
+
+  after_update_commit { broadcast_update }
 
   def update(row, col, letter)
     self.state[row][col]['letter'] = letter
@@ -24,18 +28,13 @@ class Game < ApplicationRecord
 
   def evaluate(row)
     test_word = word_from_state(row)
-    if test_word
-      # colors set to green and win state set?
-    else
-      # get intersection and set relevant cells to yellow
-      # get correct indices and set relevant cells to green
-
-    end
-
-    # puts "Correct? #{check(test_word)}"
-    # puts "Intersection: #{intersection(test_word)}"
-
     assign_color(row, test_word.split(''))
+
+    if check(test_word) && Integer(row) < self.state.length
+      self.winstate = "win"
+    elsif !check(test_word) && Integer(row) == self.state.length - 1
+      self.winstate = "lose"
+    end
 
     self.save!
   end
@@ -57,8 +56,6 @@ class Game < ApplicationRecord
       end
     end
 
-    pp self.state[row] 
-
   end
 
   def word_from_state(row)
@@ -66,20 +63,11 @@ class Game < ApplicationRecord
     self.state[row].each do |k, v|
       char = char + v['letter'].downcase
     end
-    puts char
     char
   end
 
   def check(word)
-    word === self.keyword
+    word == self.keyword
   end
-
-  # def intersection(guess)
-  #   self.keyword.split('').intersection(guess.split(''))
-  # end
-
-  # def correct_indices(guess)
-  #   self.state.split('').each_with_index.map { |x, i| guess[i] === x }
-  # end
 
 end
