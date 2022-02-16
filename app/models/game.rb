@@ -1,12 +1,36 @@
 class Game < ApplicationRecord
   before_validation(on: :create) do  
     self.state = {
-      0 => { 0 => { "letter": '', "active": "active", "color": "white"}, 1 => { "letter": '', "active": "active", "color": "white"}, 2 => { "letter": '', "active": "active", "color": "white"}, 3 => { "letter": '', "active": "active", "color": "white"}, 4 => { "letter": '', "active": "active", "color": "white"}, },
-      1 => { 0 => { "letter": '', "active": "inactive", "color": "white"}, 1 => { "letter": '', "active": "inactive", "color": "white"}, 2 => { "letter": '', "active": "inactive", "color": "white"}, 3 => { "letter": '', "active": "inactive", "color": "white"}, 4 => { "letter": '', "active": "inactive", "color": "white"}, },
-      2 => { 0 => { "letter": '', "active": "inactive", "color": "white"}, 1 => { "letter": '', "active": "inactive", "color": "white"}, 2 => { "letter": '', "active": "inactive", "color": "white"}, 3 => { "letter": '', "active": "inactive", "color": "white"}, 4 => { "letter": '', "active": "inactive", "color": "white"}, },
-      3 => { 0 => { "letter": '', "active": "inactive", "color": "white"}, 1 => { "letter": '', "active": "inactive", "color": "white"}, 2 => { "letter": '', "active": "inactive", "color": "white"}, 3 => { "letter": '', "active": "inactive", "color": "white"}, 4 => { "letter": '', "active": "inactive", "color": "white"}, },
-      4 => { 0 => { "letter": '', "active": "inactive", "color": "white"}, 1 => { "letter": '', "active": "inactive", "color": "white"}, 2 => { "letter": '', "active": "inactive", "color": "white"}, 3 => { "letter": '', "active": "inactive", "color": "white"}, 4 => { "letter": '', "active": "inactive", "color": "white"}, },
-      5 => { 0 => { "letter": '', "active": "inactive", "color": "white"}, 1 => { "letter": '', "active": "inactive", "color": "white"}, 2 => { "letter": '', "active": "inactive", "color": "white"}, 3 => { "letter": '', "active": "inactive", "color": "white"}, 4 => { "letter": '', "active": "inactive", "color": "white"}, }
+      0 => { 0 => { "letter": '', "active": "active", "color": "white"}, 
+             1 => { "letter": '', "active": "active", "color": "white"}, 
+             2 => { "letter": '', "active": "active", "color": "white"}, 
+             3 => { "letter": '', "active": "active", "color": "white"}, 
+             4 => { "letter": '', "active": "active", "color": "white"}, },
+      1 => { 0 => { "letter": '', "active": "inactive", "color": "white"}, 
+             1 => { "letter": '', "active": "inactive", "color": "white"}, 
+             2 => { "letter": '', "active": "inactive", "color": "white"}, 
+             3 => { "letter": '', "active": "inactive", "color": "white"}, 
+             4 => { "letter": '', "active": "inactive", "color": "white"}, },
+      2 => { 0 => { "letter": '', "active": "inactive", "color": "white"}, 
+             1 => { "letter": '', "active": "inactive", "color": "white"}, 
+             2 => { "letter": '', "active": "inactive", "color": "white"}, 
+             3 => { "letter": '', "active": "inactive", "color": "white"}, 
+             4 => { "letter": '', "active": "inactive", "color": "white"}, },
+      3 => { 0 => { "letter": '', "active": "inactive", "color": "white"}, 
+             1 => { "letter": '', "active": "inactive", "color": "white"}, 
+             2 => { "letter": '', "active": "inactive", "color": "white"}, 
+             3 => { "letter": '', "active": "inactive", "color": "white"}, 
+             4 => { "letter": '', "active": "inactive", "color": "white"}, },
+      4 => { 0 => { "letter": '', "active": "inactive", "color": "white"}, 
+             1 => { "letter": '', "active": "inactive", "color": "white"}, 
+             2 => { "letter": '', "active": "inactive", "color": "white"}, 
+             3 => { "letter": '', "active": "inactive", "color": "white"}, 
+             4 => { "letter": '', "active": "inactive", "color": "white"}, },
+      5 => { 0 => { "letter": '', "active": "inactive", "color": "white"}, 
+             1 => { "letter": '', "active": "inactive", "color": "white"}, 
+             2 => { "letter": '', "active": "inactive", "color": "white"}, 
+             3 => { "letter": '', "active": "inactive", "color": "white"}, 
+             4 => { "letter": '', "active": "inactive", "color": "white"}, }
     }
 
     self.keyword = "since"
@@ -40,22 +64,17 @@ class Game < ApplicationRecord
   end
 
   def assign_color(row, test_word)
-    colors = Array.new(5)
     keywordArr = self.keyword.split('')
 
     test_word.each_with_index do |value, i|
       if value == keywordArr[i]
         self.state[row][i.to_s]['color'] = 'green'
-        colors[i] = 'green'
       elsif !(value == keywordArr[i]) && keywordArr.include?(value)
         self.state[row][i.to_s]['color'] = 'yellow'
-        colors[i] = 'yellow'
       else
         self.state[row][i.to_s]['color'] = 'gray'
-        colors[i] = 'gray'
       end
     end
-
   end
 
   def word_from_state(row)

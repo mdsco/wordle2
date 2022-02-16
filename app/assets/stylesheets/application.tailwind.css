@@ -12,24 +12,25 @@ body {
 }
 
 .wordle-container {
-  padding: 5rem;
-  margin: 0 auto;
+  margin-top: 5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.wordle-container form {
+  width: 368px;
 }
 
 .wordle-container .row {
-  width: 300px;
   display: flex;
 }
 
 .wordle-container .col {
-  flex-grow: 1;
   margin: 2px;
-  border: #d3d6da 2px solid;
   display: flex;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  /* padding: 0.4em 0.5em; */
   font-size: 2.5rem;
   min-width: 1.75em;
   min-height: 4rem;
@@ -43,6 +44,7 @@ body {
   border: #6aaa64;
   background-color: #6aaa64;
   color: white;
+  transition: 1s all;
 }
 
 .wordle-container .col-yellow {
@@ -69,10 +71,53 @@ body {
   text-transform: uppercase; 
   text-align: center;
   box-sizing: border-box;
+  border: #d3d6da 2px solid;
 }
 
 .wordle-container .col input:focus {
   border: #000000 2px solid;
   box-sizing: border-box;
   caret-color: #fff;
+}
+
+.wordle-submit {
+  margin-top: 10px;
+  float: right;
+  background-color: white;
+  color: #787c7e;
+  padding: 5px 25px;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  border: 2px solid #787c7e;
+}
+
+.wordle-submit:hover {
+  background-color: #787c7e;
+  color: white; 
+}
+
+.wordle-submit:active {
+  background-color: #9da3a7;
+  border-color: #9da3a7;
+}
+
+.wordle-submit-win,
+.wordle-submit-lose {
+  border: 2px solid #9da3a7;
+  background-color: white;
+  color: #9da3a7;
+}
+
+.wordle-submit-win:hover,
+.wordle-submit-lose:hover {
+  border: 2px solid #9da3a7;
+  background-color: white;
+  color: #9da3a7;
+}
+
+.wordle-submit-win:active,
+.wordle-submit-lose:active {
+  border: 2px solid #9da3a7;
+  background-color: white;
+  color: #9da3a7;
 }
