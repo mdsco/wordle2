@@ -9,12 +9,43 @@ body {
   font-size: 2rem;
   font-weight: bold;
   line-height: 2rem;
+  height: 100vh;
+}
+
+main {
+  height: 100vh;
+}
+
+.intro-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  margin-top: -100px;
+}
+
+.intro-container h1 {
+  font-size: 40px;
+  margin-bottom: 25px;
+}
+
+.intro-container input:hover {
+  cursor: pointer;
+  color: green;
+}
+
+.intro-container input:active {
+  cursor: pointer;
+  color: rgb(5, 214, 5);
 }
 
 .wordle-container {
   margin-top: 5rem;
   display: flex;
   justify-content: center;
+
+  position: relative;
 }
 
 .wordle-container form {
@@ -120,4 +151,23 @@ body {
   border: 2px solid #9da3a7;
   background-color: white;
   color: #9da3a7;
+}
+
+.winstate {
+  background-color: black;
+  border-radius: 10px;
+  box-shadow: 2px 6px 4px rgba(0,0,0,.3);
+  color: white;
+  display: none;
+  font-size: 24px;
+  padding: 15px 20px;
+  position: absolute;
+  top: -30px;
+  min-width: 10rem;
+  text-align: center;
+}
+
+.winstate-win, .winstate-lose {
+  display: block;
+  transition: 1s all ease-in;
 }
