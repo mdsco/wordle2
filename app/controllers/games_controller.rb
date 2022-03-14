@@ -25,4 +25,9 @@ class GamesController < ApplicationController
 
     render show
   end
+
+  def letterupdate
+    foo = params[:value]
+    puts "What!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #{foo}"
+  end
 end

@@ -1,13 +1,13 @@
 <div class="winstate <% if game.winstate != '' %> <%= 'winstate-' + game.winstate %> <% end %> %>"><% if game.winstate == 'win' %><%= "Genius" %><% end %><% if game.winstate == 'lose' %><%= game.keyword %><% end %></div>
 <%= form_with model: game, method: :patch, autocomplete: "off" do |form| %>
   <% game.state.each do |row_key, row_val| %>
-    <div class="row">
+    <div class="row" data-controller="wordle">
     <% row_val.each do |col_key, col_val| %>
       <% if col_val['letter'] != '' %>
         <span class="col col-<%= col_val['color'] %>"><%= "#{col_val['letter']}" %></span>
       <% elsif col_val['active'] == 'active' %>
         <span class="col">
-          <%= form.text_field name="#{row_key}-#{col_key}", :maxlength => 1, class: "col-active", autocomplete: "off", pattern: '[a-zA-Z]', title: 'letter' %>
+          <%= form.text_field name="#{row_key}-#{col_key}", :maxlength => 1, class: "col-active", autocomplete: "off", pattern: '[a-zA-Z]', title: 'letter', data: { action: "wordle#changed"} %>
         </span>
       <% else %>
         <span class="col">
