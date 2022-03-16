@@ -50,6 +50,14 @@ class Game < ApplicationRecord
     self.save!
   end
 
+  def update_letter(row, col, letter)
+    cell = self.state[row][col]
+    cell['letter'] = letter
+    cell['color'] = "black"
+    
+    self.save!
+  end
+
   def evaluate(row)
     test_word = word_from_state(row)
     assign_color(row, test_word.split(''))

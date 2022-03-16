@@ -27,7 +27,12 @@ class GamesController < ApplicationController
   end
 
   def letterupdate
-    foo = params[:value]
-    puts "What!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #{foo}"
+    letter = params[:letter]
+    id = params[:id]
+    row, col = params[:cell].split('-')
+    puts "Row: #{row}, Col #{col}, Letter: #{letter}, ID: #{id}"
+    @game = Game.find(params[:id])
+    @game.update_letter(row, col, letter)
+
   end
 end

@@ -84,11 +84,21 @@ main {
   color: white;
 }
 
+.wordle-container .col-black {
+  border: #000 2px solid;
+  background-color: #fff;
+}
+
 .wordle-container .col-gray {
   border: #787c7e;
   background-color: #787c7e;
   color: white;
 }
+
+.wordle-container .col-white {
+  border: #d3d6da 2px solid;
+}
+
 
 .wordle-container .col input {
   width: 100%;
@@ -102,13 +112,15 @@ main {
   text-transform: uppercase; 
   text-align: center;
   box-sizing: border-box;
-  border: #d3d6da 2px solid;
 }
 
 .wordle-container .col input:focus {
-  border: #000000 2px solid;
-  box-sizing: border-box;
   caret-color: #fff;
+}
+
+.wordle-container .col:focus-within {
+  border: #000 2px solid;
+  box-sizing: border-box;
 }
 
 .wordle-submit {

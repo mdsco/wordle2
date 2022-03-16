@@ -2,12 +2,12 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
 
-  connect() {
-    console.log("Connnedfkjalkjted")
-  }
+  static values = { cell: String, game: Number }  
 
   changed(event) {
     console.log("Value: ", event.target.value)
+    console.log("Cell target: ", this.cellValue)
+    console.log("Game id: ", this.gameValue)
 
     const csrfToken = document.getElementsByName("csrf-token")[0].content;
 
@@ -17,9 +17,8 @@ export default class extends Controller {
         "X-CSRF-Token": csrfToken,
         'Content-Type': 'application/json;charset=utf-8'
       },
-      body: JSON.stringify({ value: event.target.value })
+      body: JSON.stringify({ id: this.gameValue, letter: event.target.value, cell: this.cellValue })
     });
-
 
   }
 

@@ -1,16 +1,16 @@
 <div class="winstate <% if game.winstate != '' %> <%= 'winstate-' + game.winstate %> <% end %> %>"><% if game.winstate == 'win' %><%= "Genius" %><% end %><% if game.winstate == 'lose' %><%= game.keyword %><% end %></div>
-<%= form_with model: game, method: :patch, autocomplete: "off" do |form| %>
+<%= form_with model: game, method: :patch, data: { turbo: false }, autocomplete: "off" do |form| %>
   <% game.state.each do |row_key, row_val| %>
-    <div class="row" data-controller="wordle">
+    <div class="row">
     <% row_val.each do |col_key, col_val| %>
-      <% if col_val['letter'] != '' %>
-        <span class="col col-<%= col_val['color'] %>"><%= "#{col_val['letter']}" %></span>
-      <% elsif col_val['active'] == 'active' %>
-        <span class="col">
-          <%= form.text_field name="#{row_key}-#{col_key}", :maxlength => 1, class: "col-active", autocomplete: "off", pattern: '[a-zA-Z]', title: 'letter', data: { action: "wordle#changed"} %>
+      <% if col_val['active'] == 'active' %>
+        <span class="col col-<%= col_val['color'] %>" data-controller="wordle" data-wordle-cell-value=<%= "#{row_key}-#{col_key}" %> data-wordle-game-value=<%= game.id %>>
+          <%= form.text_field name="#{row_key}-#{col_key}", :maxlength => 1, value: col_val['letter'], class: "col-active", autocomplete: "off", pattern: '[a-zA-Z]', title: 'letter', data: { action: "wordle#changed" } %>
         </span>
+      <% elsif col_val['active'] == 'played' %>
+        <span class="col col-<%= col_val['color'] %>"><%= "#{col_val['letter']}" %></span>
       <% else %>
-        <span class="col">
+        <span class="col col-<%= col_val['color'] %>">
           <%= form.text_field :attribute, :maxlength => 1, disabled: true %>
         </span>
       <% end %>
@@ -19,6 +19,3 @@
   <% end %>
   <%= form.submit "Submit", class: 'wordle-submit wordle-submit-' + game.winstate, disabled: game.winstate == 'win' || game.winstate == 'lose'  %>
 <% end %>
-
-
-
