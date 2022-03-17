@@ -2,16 +2,12 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
 
-  static values = { cell: String, game: Number }  
+  static values = { cell: String, game: Number }
 
   changed(event) {
-    console.log("Value: ", event.target.value)
-    console.log("Cell target: ", this.cellValue)
-    console.log("Game id: ", this.gameValue)
-
     const csrfToken = document.getElementsByName("csrf-token")[0].content;
 
-    let response = fetch('/letterupdate', {
+    let response = fetch('/letter_update', {
       method: 'POST',
       headers: {
         "X-CSRF-Token": csrfToken,

@@ -33,7 +33,8 @@ class Game < ApplicationRecord
              4 => { "letter": '', "active": "inactive", "color": "white"}, }
     }
 
-    self.keyword = GamesHelper::WORDLIST.sample
+    # self.keyword = GamesHelper::WORDLIST.sample
+    self.keyword = 'beans'
 
     self.winstate = ''
   end
@@ -54,12 +55,22 @@ class Game < ApplicationRecord
     cell = self.state[row][col]
     cell['letter'] = letter
     cell['color'] = "black"
+
+    intcol = col.to_i
+    nextcol = (intcol + 1).to_s
+
+    if (col.to_i <= self.state[row].length - 2)
+      self.state[row][col]['focus'] = false 
+      self.state[row][nextcol]['focus'] = true
+    end
     
     self.save!
   end
 
   def evaluate(row)
+
     test_word = word_from_state(row)
+
     assign_color(row, test_word.split(''))
 
     if check(test_word) && Integer(row) < self.state.length
@@ -74,15 +85,30 @@ class Game < ApplicationRecord
   def assign_color(row, test_word)
     keywordArr = self.keyword.split('')
 
+    letters = map_letters(self.keyword)
+
     test_word.each_with_index do |value, i|
       if value == keywordArr[i]
         self.state[row][i.to_s]['color'] = 'green'
-      elsif !(value == keywordArr[i]) && keywordArr.include?(value)
-        self.state[row][i.to_s]['color'] = 'yellow'
-      else
+        if letters[value] > 0
+          letters[value] -= 1
+        end
+      end
+    end
+
+    test_word.each_with_index do |value, i|
+      if keywordArr.include?(value) && letters[value] > 0
+        if self.state[row][i.to_s]['color'] != 'green'
+          self.state[row][i.to_s]['color'] = 'yellow'
+        end
+        if letters[value] > 0
+          letters[value] -= 1
+        end
+      elsif self.state[row][i.to_s]['color'] != 'green'
         self.state[row][i.to_s]['color'] = 'gray'
       end
     end
+
   end
 
   def word_from_state(row)
@@ -95,6 +121,10 @@ class Game < ApplicationRecord
 
   def check(word)
     word == self.keyword
+  end
+
+  def map_letters(s)
+    Hash[s.split('').group_by{ |c| c }.map{ |k, v| [k, v.size] }]
   end
 
 end
