@@ -33,9 +33,7 @@ class Game < ApplicationRecord
              4 => { "letter": '', "active": "inactive", "color": "white"}, }
     }
 
-    # self.keyword = GamesHelper::WORDLIST.sample
-    self.keyword = 'beans'
-
+    self.keyword = GamesHelper::WORDLIST.sample
     self.winstate = ''
   end
 
